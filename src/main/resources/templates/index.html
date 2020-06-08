@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HTMLParser</title>
+    <link rel="stylesheet" href="/css/index.css">
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/index.js"></script>
+    <script type="text/javascript" src="/js/vue.min.js"></script>
+</head>
+<body>
+<div class="loading-dialog" id="loading-dialog">
+    <div class="mask"></div>
+    <div class="loading-panel">
+        <div class="loading-content">
+            <!--img class="close-dialog" src="pics/close.png" onclick="hideLoading()" alt="loading"-->
+            <img src="pics/loading.gif" class="loading-icon" alt="close">
+            <div>Loading</div>
+        </div>
+    </div>
+</div>
+<div class="download-dialog" id="download-dialog">
+    <div class="mask" onclick="hideDownloading()" id="download-mask"></div>
+    <div class="download-panel" id="download-panel">
+        <iframe style="width: 100%;height: 100%;border: none;"></iframe>
+    </div>
+</div>
+<div class="bottom-nav">
+    <label>
+        <div class="pop-up-menu">
+            <ul class="list" id="filter-list" style="display: none">
+                <li v-for="type in types">{{type.name}}<input :data-bind="type.name" type="checkbox" v-model="type.selected" onchange="onFilterChange(this)"></li>
+            </ul>
+            <button class="btn btn-default" onclick="toggleFilter(this)" data-toggle="filter-list">Type Filter<img src="/pics/up.png" style="width: 10px;height: 10px;margin-left: 10px"></button>
+        </div>
+    </label>
+    <label>
+        <img src="/pics/directory.png" style="width: 28px;height: 28px; margin-right: 10px">
+        <input type="text" disabled onclick="selectDirectory()" placeholder="Click to select directory">
+    </label>
+    <button class="btn btn-primary">
+        <img src="/pics/download_icon.png">
+        Download All Selected
+    </button>
+    <button class="btn btn-success" onclick="selectAll()">
+        Select All
+    </button>
+    <button class="btn btn-warning" onclick="reverseSelect()">Reverse Selection</button>
+    <button class="btn btn-danger" onclick="deselectAll()">Deselect All</button>
+</div>
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="javascript:void(0);">HTML Parser</a>
+        </div>
+        <div class="nav">
+            <div class="container-fluid">
+                <label style="padding-left: 10px;padding-top: 10px">
+                    <input type="text" class="form-control" placeholder="Input your link address" id="input-address" value="http://www.huangchengxi.cn">
+                </label>
+                <button class="btn btn-success" onclick="analyze()">Analyze</button>
+                <div class="download" onclick="showDownloading()">
+                    <img src="pics/download.png">
+                    <div>Downloading</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+<div class="container">
+    <div class="col-lg-12"></div>
+    <div class="col-lg-12">
+        <table class="table table-bordered m-table" id="list-table" style="margin-bottom: 60px">
+            <thead>
+            <tr>
+                <th>Resource Name</th>
+                <th>Resource Type</th>
+                <th>Resource Location</th>
+                <th>Selection</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="file in files" class="m-table-tr">
+                <td>{{file.name}}</td>
+                <td>{{file.type}}</td>
+                <td><a :href="file.url">{{file.url}}</a></td>
+                <td class="select-box">
+                    <label>
+                        <input type="checkbox" v-model="file.checked" class="form-control">
+                    </label>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

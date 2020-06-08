@@ -1,0 +1,189 @@
+html,body{
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+.download{
+    float: right;
+    height: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+.download img{
+    width: 24px;
+    height: 24px;
+}
+.loading-dialog{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    display: none;
+}
+.loading-dialog .mask{
+    width: 100%;
+    height: 100%;
+    background-color: rgba(221, 221, 221, 0.5);
+    z-index: 1;
+}
+.loading-dialog .loading-panel{
+    top: 50%;
+    left: 50%;
+    margin-left: -100px;
+    margin-top: -100px;
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    z-index: 2;
+}
+.loading-dialog .loading-content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    border-radius: 5px;
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+.loading-dialog img.loading-icon{
+    width: 30px;
+    height: 30px;
+}
+.loading-dialog img.close-dialog{
+    right: 10px;
+    top: 10px;
+    position: absolute;
+    width: 20px;
+    height: 20px;
+}
+.select-box{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.select-box input[type=checkbox]{
+    width: auto;
+    height: auto;
+    display: inline-block;
+}
+.bottom-nav{
+    position:fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    border-top: #c4c4c4 solid 1px;
+    z-index: 9;
+    background-color: white;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+}
+.bottom-nav button{
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.bottom-nav button img{
+    width: 20px;
+    height: 20px;
+}
+.bottom-nav input[type=text]{
+    width: 300px;
+    height: 30px;
+}
+.download-dialog{
+    display: none;
+    z-index: 10;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.download-dialog .mask{
+    width: 100%;
+    height: 100%;
+    background-color: rgba(221, 221, 221, 0.5);
+    z-index: 1;
+}
+.download-dialog .download-panel{
+    width: 600px;
+    height: 500px;
+    background-color: white;
+    border-radius: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -300px;
+    margin-top: -250px;
+    -moz-animation: show-download;
+    -webkit-animation: show-download;
+    animation-duration: 300ms;
+    animation: show-download;
+    animation-timing-function: linear;
+}
+@keyframes show-download {
+    from{
+        width: 500px;
+        height: 400px;
+        opacity: 0.9;
+    }
+    to{
+        width: 600px;
+        height: 500px;
+        opacity: 1.0;
+    }
+}
+.m-table-tr{
+    background-color: white;
+    transition-duration: 500ms;
+}
+.m-table-tr:hover {
+    background-color: #5cb85c;
+}
+.m-table{
+    max-height: 80%;
+}
+.pop-up-menu{
+    width: 150px;
+    height: 30px;
+    margin: 10px;
+}
+.pop-up-menu ul.list{
+    position: absolute;
+    bottom: 45px;
+    width: 200px;
+    background-color: white;
+    border-radius: 5px;
+    transition-duration: 300ms;
+    display: none;
+    padding: 0;
+    overflow-x: hidden;
+    box-shadow: rgba(128, 128, 128, 0.51) 1px 1px 5px;
+}
+.pop-up-menu ul.list li{
+    height: 40px;
+    width: 100%;
+    text-decoration: none;
+    padding: 5px;
+}
+.pop-up-menu ul.list li:hover{
+    background-color: #c4c4c4;
+}
+.pop-up-menu ul.list li input[type=checkbox]{
+    float: right;
+}
+.pop-up-menu ul.list:active{
+    display: block;
+}
