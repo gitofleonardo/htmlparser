@@ -209,7 +209,40 @@ function onFilterChange(el) {
     }
 }
 function downloadAllSelected() {
-    
+    var path=""
+    var length=directory.paths.length
+    for (var i=0;i<length;i++){
+        if (i!==length-1 && i!==0){
+            path+=directory.paths[i]+"/"
+            continue
+        }
+        path+=directory.paths[i]
+    }
+    var dat={}
+    dat["directory"]=path
+    var fs=[]
+    length=list.files.length
+    for (var i=0;i<length;i++){
+        if (list.files[i]["checked"]){
+            fs.push(list.files[i])
+        }
+    }
+    dat["files"]=fs
+
+    $.ajax({
+        url:"/download",
+        type:"POST",
+        data:JSON.stringify(dat),
+        contentType:"application/json",
+        success:function (result) {
+            var resultJ=JSON.parse(result)
+            if (resultJ["result"]==="success"){
+                alert("Added to download queue successfully")
+            }else{
+                alert(result)
+            }
+        }
+    })
 }
 function selectDirectory() {
     document.getElementById("select-dialog").style.display="block"

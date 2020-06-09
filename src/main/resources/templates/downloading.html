@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Downloading Files</title>
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/vue.min.js"></script>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <style>
+        body,html{
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        body::-webkit-scrollbar{
+            display: none;
+        }
+        body::-webkit-scrollbar-thumb{
+            display: none;
+        }
+        .my-list-group li:hover{
+            background-color: #5bc0de;
+        }
+        .badge-img{
+            width: 20px;
+            height: 20px;
+            float: right;
+        }
+    </style>
+    <script>
+        var download
+        $(document).ready(function () {
+            download=new Vue({
+                el:"#down-list",
+                data:{
+                    downloadings:[],
+                    downloadeds:[]
+                }
+            })
+            setInterval(fetchStates,1000)
+        })
+        function fetchStates() {
+            $.ajax({
+                url:"/DownloadState",
+                data:"",
+                type:"GET",
+                success:function (result) {
+                    //console.log(result)
+                    var arr=JSON.parse(result)
+                    var downloading=[]
+                    var downloaded=[]
+                    for (var i=0;i<arr.length;i++){
+                        if (arr[i]["state"]=="DOWNLOADED"){
+                            downloaded.push(arr[i])
+                        }else if (arr[i]["state"]=="DOWNLOADING"){
+                            downloading.push(arr[i])
+                        }
+                    }
+                    download.downloadings=downloading
+                    download.downloadeds=downloaded
+                }
+            })
+        }
+        function openDir() {
+            $.ajax({
+                url:"/openfiles",
+                type:"GET",
+                data:"",
+                success:function (result) {
+                }
+            })
+        }
+    </script>
+</head>
+<body>
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand">Download</a>
+        </div>
+        <div>
+            <ul class="nav navbar-nav">
+                <li onclick="openDir()"><a>Show in files</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="col-lg-12">
+    <ul class="list-group" id="down-list">
+        <li v-for="downloading in downloadings" class="list-group-item">{{downloading.name}}<img src="/pics/download.png" class="badge-img"></li>
+        <li v-for="downloaded in downloadeds" class="list-group-item">{{downloaded.name}}<img src="/pics/check.png" class="badge-img"></li>
+    </ul>
+</div>
+</body>
+</html>

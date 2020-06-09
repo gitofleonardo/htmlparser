@@ -9,5 +9,6 @@ public class WebMvcConf implements WebMvcConfigurer {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/").setViewName("index");
+        registry.addViewController("/downloading").setViewName("downloading");
     }
 }

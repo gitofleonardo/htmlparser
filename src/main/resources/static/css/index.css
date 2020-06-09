@@ -118,20 +118,21 @@ html,body{
     z-index: 1;
 }
 .download-dialog .download-panel{
-    width: 600px;
+    width: 800px;
     height: 500px;
     background-color: white;
     border-radius: 10px;
     position: absolute;
     top: 50%;
     left: 50%;
-    margin-left: -300px;
+    margin-left: -400px;
     margin-top: -250px;
     -moz-animation: show-download;
     -webkit-animation: show-download;
     animation-duration: 300ms;
     animation: show-download;
     animation-timing-function: linear;
+    overflow: hidden;
 }
 @keyframes show-download {
     from{
