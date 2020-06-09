@@ -1,5 +1,6 @@
 var list
 var types
+var directory
 $(document).ready(function () {
     list=new Vue({
         el:"#list-table",
@@ -16,13 +17,117 @@ $(document).ready(function () {
             ]
         }
     })
+    directory=new Vue({
+        el:"#select-dialog",
+        data:{
+            current:"/",
+            paths:["/"],
+            dirs:[]
+        }
+    })
+    fetchInitial()
 })
+function fetchInitial(){
+    var fetch=directory.current
+    var dat={}
+    dat["currentPath"]=fetch
+    $.ajax({
+        url:"/directories",
+        type:"GET",
+        data:dat,
+        success:function (result) {
+            try{
+                var resultJ=JSON.parse(result)
+                var dirs=resultJ["dirs"]
+                directory.dirs=dirs
+            }catch (e) {
+                alert(e)
+            }
+        }
+    })
+}
+function changeDirectory(el) {
+    var click=el.getAttribute("data-dir")
+    var path=""
+    for (var i=0;i<directory.paths.length;i++){
+        if (i===0){
+            path+=directory.paths[i]
+        }else{
+            path+=directory.paths[i]+"/"
+        }
+    }
+    path+=click
+    var dat={}
+    dat["currentPath"]=path
+    $.ajax({
+        url:"/directories",
+        type:"GET",
+        data:dat,
+        success:function (result) {
+            try{
+                var resultJ=JSON.parse(result)
+                var dirs=resultJ["dirs"]
+                directory.dirs=dirs
+                directory.paths.push(click)
+            }catch (e) {
+                alert(e)
+            }
+        }
+    })
+}
+function changeToDirectory(path) {
+    var dat={}
+    dat["currentPath"]=path
+    $.ajax({
+        url:"/directories",
+        type:"GET",
+        data:dat,
+        success:function (result) {
+            try{
+                var resultJ=JSON.parse(result)
+                var dirs=resultJ["dirs"]
+                directory.dirs=dirs
+            }catch (e) {
+                alert(e)
+            }
+        }
+    })
+}
+function directoryBack(el) {
+    var index=el.getAttribute("data-path")
+    var path=""
+    var length=directory.paths.length
+    for (var i=0;i<length;i++){
+        if (i<=index){
+            if (i!==0){
+                path+=directory.paths[i]+"/"
+            }else{
+                path+=directory.paths[i]
+            }
+        }else{
+            directory.paths.pop()
+        }
+    }
+    changeToDirectory(path)
+}
+function selectCurrent() {
+    var path=""
+    var length=directory.paths.length
+    for (var i=0;i<length;i++){
+        if (i!==length-1 && i!==0){
+            path+=directory.paths[i]+"/"
+            continue
+        }
+        path+=directory.paths[i]
+    }
+    document.getElementById("current-dir").value=path
+    hideSelectDirectory()
+}
 function analyze() {
     showLoading()
     var dat=document.getElementById("input-address").value
     var send={}
     send["address"]=dat
-
     $.ajax({
         url:"/analyze?address="+dat,
         type:"GET",
@@ -103,8 +208,14 @@ function onFilterChange(el) {
         list.files=files
     }
 }
-function selectDirectory() {
+function downloadAllSelected() {
     
+}
+function selectDirectory() {
+    document.getElementById("select-dialog").style.display="block"
+}
+function hideSelectDirectory() {
+    document.getElementById("select-dialog").style.display="none"
 }
 function showDownloading(){
     document.getElementById("download-dialog").style.display="block"

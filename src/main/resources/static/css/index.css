@@ -21,7 +21,7 @@ html,body{
 .loading-dialog{
     width: 100%;
     height: 100%;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     z-index: 10;
@@ -107,7 +107,7 @@ html,body{
     z-index: 10;
     width: 100%;
     height: 100%;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
 }
@@ -186,4 +186,94 @@ html,body{
 }
 .pop-up-menu ul.list:active{
     display: block;
+}
+.select-dialog{
+    display: none;
+    z-index: 10;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+.select-dialog .mask{
+    width: 100%;
+    height: 100%;
+    background-color: rgba(221, 221, 221, 0.5);
+    z-index: 1;
+}
+.select-dialog .select-panel{
+    width: 600px;
+    height: 500px;
+    background-color: white;
+    border-radius: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -300px;
+    margin-top: -250px;
+    -moz-animation: show-download;
+    -webkit-animation: show-download;
+    animation-duration: 300ms;
+    animation: show-download;
+    animation-timing-function: linear;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.select-dialog .select-panel .select-title{
+    width: 100%;
+    padding: 20px;
+    text-decoration: none;
+    color: grey;
+}
+.select-dialog .select-panel ul.select-dir{
+    width: 100%;
+    height: 600px;
+    background-color: white;
+    padding-left: 10px;
+    overflow-x: hidden;
+}
+.select-dialog .select-panel ul.select-dir::-webkit-scrollbar{
+    width: 5px;
+    height: 5px;
+}
+.select-dialog .select-panel ul.select-dir::-webkit-scrollbar-track{
+    background-color: white;
+}
+.select-dialog .select-panel ul.select-dir::-webkit-scrollbar-thumb{
+    border-radius: 2px;
+    background-color: rgba(128, 128, 128, 0.51);
+}
+.select-dialog .select-panel ul.select-dir li{
+    user-select: none;
+    width: 100%;
+    height: 35px;
+    padding: 5px;
+}
+.select-dialog .select-panel ul.select-dir li img{
+    width: 20px;
+    height: 20px;
+}
+.select-dialog .select-panel ul.select-dir li:hover{
+    background-color: rgba(128, 128, 128, 0.5);
+}
+.select-dialog .select-panel ul.select-path{
+    width: 100%;
+    height: 30px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-left: 10px;
+}
+.select-dialog .select-panel ul.select-path::-webkit-scrollbar{
+    display: none;
+}
+.select-dialog .select-panel ul.select-path li{
+    list-style: none;
+    padding: 5px;
+    user-select: none;
+}
+.select-dialog .select-panel ul.select-path li:hover{
+    background-color: rgba(128, 128, 128, 0.5);
 }

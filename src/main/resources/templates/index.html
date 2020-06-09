@@ -10,6 +10,18 @@
     <script type="text/javascript" src="/js/vue.min.js"></script>
 </head>
 <body>
+<div class="select-dialog" id="select-dialog">
+    <div class="mask" onclick="hideSelectDirectory()"></div>
+    <div class="select-panel">
+        <a class="select-title">Select Download Directory<button class="btn btn-primary" style="float: right" onclick="selectCurrent()">Select Current</button></a>
+        <ul id="select-directories" class="select-dir">
+            <li v-for="dir in dirs" :data-dir="dir" onclick="changeDirectory(this)"><img src="/pics/directory_select.png" style="margin-right: 10px">{{dir}}</li>
+        </ul>
+        <ul class="select-path">
+            <li v-for="(value,index) in paths" onclick="directoryBack(this)" :data-path="index">{{value}}</li>
+        </ul>
+    </div>
+</div>
 <div class="loading-dialog" id="loading-dialog">
     <div class="mask"></div>
     <div class="loading-panel">
@@ -27,19 +39,17 @@
     </div>
 </div>
 <div class="bottom-nav">
-    <label>
-        <div class="pop-up-menu">
-            <ul class="list" id="filter-list" style="display: none">
-                <li v-for="type in types">{{type.name}}<input :data-bind="type.name" type="checkbox" v-model="type.selected" onchange="onFilterChange(this)"></li>
-            </ul>
-            <button class="btn btn-default" onclick="toggleFilter(this)" data-toggle="filter-list">Type Filter<img src="/pics/up.png" style="width: 10px;height: 10px;margin-left: 10px"></button>
-        </div>
-    </label>
-    <label>
-        <img src="/pics/directory.png" style="width: 28px;height: 28px; margin-right: 10px">
-        <input type="text" disabled onclick="selectDirectory()" placeholder="Click to select directory">
-    </label>
-    <button class="btn btn-primary">
+    <div class="pop-up-menu">
+        <ul class="list" id="filter-list" style="display: none">
+            <li v-for="type in types"><a href="javascript:void(0);">{{type.name}}</a><input :data-bind="type.name" type="checkbox" v-model="type.selected" onchange="onFilterChange(this)"></li>
+        </ul>
+        <button class="btn btn-default" onclick="toggleFilter(this)" data-toggle="filter-list">Type Filter<img src="/pics/up.png" style="width: 10px;height: 10px;margin-left: 10px"></button>
+    </div>
+    <div style="display: flex;flex-direction: row;align-items: center">
+        <img src="/pics/directory.png" style="width: 24px;height: 24px; margin-right: 15px" onclick="selectDirectory()">
+        <input type="text" disabled placeholder="Click to select directory" id="current-dir">
+    </div>
+    <button class="btn btn-primary" onclick="downloadAllSelected()">
         <img src="/pics/download_icon.png">
         Download All Selected
     </button>
